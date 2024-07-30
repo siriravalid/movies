@@ -1,24 +1,25 @@
 import pickle
 import bz2
 import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
-import streamlit as st
 import difflib
+import streamlit as st
 
-# Load the model data
-model_path = 'model_data.pkl.bz2'
-with bz2.BZ2File(model_path, 'rb') as f:
-    model_data = pickle.load(f)
+# Load the compressed model and data
+def load_model_and_data():
+    with bz2.BZ2File('model_data.pkl.bz2', 'rb') as f:
+        model_data = pickle.load(f)
+    return model_data
 
-feature_vectors = model_data['feature_vectors']
-movies_data = model_data['movies_data']
-
-# Recompute the similarity matrix
-similarity = cosine_similarity(feature_vectors)
-
-# Streamlit code to take user input and recommend movies
+# Streamlit application
 st.title('Movie Recommendation System')
 
+# Load model and data
+model_data = load_model_and_data()
+movies_data = model_data['movies_data']
+feature_vectors = model_data['feature_vectors']
+similarity = model_data['similarity']
+
+# User input
 movie_name = st.text_input('Enter your favourite movie name:')
 if movie_name:
     list_of_all_titles = movies_data['title'].tolist()
