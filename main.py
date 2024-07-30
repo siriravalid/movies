@@ -5,8 +5,8 @@ import difflib
 import streamlit as st
 import scipy
 
-
-
+# Log to confirm scipy import
+st.write("Scipy version:", scipy.__version__)
 
 # Load the compressed model and data
 def load_model_and_data():
@@ -51,3 +51,5 @@ if model_data:
                 st.write("No close match found for the given movie name.")
     else:
         st.error("Model data is missing required components.")
+else:
+    st.error("Failed to load model data.")
