@@ -3,6 +3,10 @@ import bz2
 import pandas as pd
 import difflib
 import streamlit as st
+import scipy
+
+st.write(f"Scipy version: {scipy.__version__}")
+
 
 # Load the compressed model and data
 def load_model_and_data():
